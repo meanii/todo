@@ -6,5 +6,11 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'todolist';
+
+  title = " ";
+  tasks = []
+
+  onTaskAdd(task){
+    this.tasks.push(task)
+  }
 }

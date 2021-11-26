@@ -1,6 +1,12 @@
-<textarea cols="60" rows="6" [value]="newTask"> {{ newTask }} </textarea>
-<hr>
-<button (click)="onCreateTask()"> Create </button>
+<mat-card>
+  <mat-form-field>
+    <mat-label>Todo Title</mat-label>
+    <input matInput type="text" [(ngModel)]="enteredTitle" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Todo Discription</mat-label>
+    <textarea matInput [(ngModel)]="enteredDescription" placeholder="Ex. It makes me feel..."></textarea>
+  </mat-form-field>
 
-<br>
-{{ newTask }}
+  <button mat-raised-button color="primary"  (click)="onCreateTask()"> Create </button>
+</mat-card>

@@ -1,3 +1,5 @@
-<h1> Todo List </h1>
-
-<app-create></app-create>
+<app-header></app-header>
+<main>
+  <app-task-create (taskCreate)="onTaskAdd($event)" ></app-task-create>
+  <app-task-list [storedTasks]="tasks"></app-task-list>
+</main>

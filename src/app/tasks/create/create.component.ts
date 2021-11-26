@@ -1,15 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-create',
+  selector: 'app-task-create',
   templateUrl: './create.component.html',
   styleUrls: ['./create.component.scss']
 })
 export class CreateComponent {
 
-  newTask = "Add a task.";
+  enteredTitle = "";
+  enteredDescription = "";
+  @Output() taskCreate = new EventEmitter();
+
   onCreateTask() {
-    this.newTask = "my new task";
+
+    const task = {
+      title: this.enteredTitle,
+      discription: this.enteredDescription
+    }
+    this.taskCreate.emit(task);
+
   }
 
 }

@@ -1,0 +1,14 @@
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let task of storedTasks">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ task.title }}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    {{ task.discription }}
+  </mat-expansion-panel>
+</mat-accordion>
+
+<p class="info-text mat-panel-title" *ngIf="storedTasks.length <= 0">
+  No tasks haven't added yet.
+</p>
