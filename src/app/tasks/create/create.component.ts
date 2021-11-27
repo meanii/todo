@@ -21,6 +21,7 @@ export class CreateComponent {
       return;
     }
     const task: Task = {
+      _id: null,
       title: form.value.title,
       discription: form.value.description
     }

@@ -18,7 +18,7 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.storedTasks = this.tasksService.getTasks();
+    this.tasksService.getTasks();
     this.tasksSub = this.tasksService.getTaskUpdateLister()
       .subscribe((tasks: Task[])=> {
         this.storedTasks = tasks;
