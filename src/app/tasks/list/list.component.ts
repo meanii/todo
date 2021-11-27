@@ -25,6 +25,10 @@ export class ListComponent implements OnInit, OnDestroy {
       })
     }
 
+    onDelete(id: string){
+      this.tasksService.deleteTask(id)
+    }
+
   ngOnDestroy() { // ngOnDestroy for memories leacks
     this.tasksSub.unsubscribe();
   }

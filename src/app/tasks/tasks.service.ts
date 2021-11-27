@@ -9,16 +9,15 @@ export class TaskService {
   private tasksUpdated = new Subject<Task[]>();
 
   constructor(private http: HttpClient){
+
+  }
+
+  getTasks(){
     this.http.get<{status:{}, data:Task[]}>('http://localhost:3000/api/tasks')
       .subscribe((taskData)=> {
           this.tasks = taskData.data;
           this.tasksUpdated.next([...this.tasks]);
       });
-  }
-
-  getTasks(){
-
-
   }
 
   getTaskUpdateLister() {
@@ -27,13 +26,21 @@ export class TaskService {
 
   addTask(task: Task){
 
-    this.http.post<{status:{}}>('http://localhost:3000/api/tasks', task)
+    this.http.post<{status:{}, data: Task}>('http://localhost:3000/api/tasks', task)
       .subscribe((resp)=>{
-        console.log(resp);
-
-        this.tasks.push(task);
+        this.tasks.push(resp.data);
         this.tasksUpdated.next([...this.tasks]);
       })
 
   }
+
+  deleteTask(id: string){
+    this.http.delete('http://localhost:3000/api/tasks/' + id)
+    .subscribe((resp)=>{
+      this.tasks = this.tasks.filter(task => task._id != id);
+      this.tasksUpdated.next([...this.tasks]);
+    })
+  }
 }
+
+
