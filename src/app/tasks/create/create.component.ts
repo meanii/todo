@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { Task } from '../list/task.model';
 
 @Component({
@@ -8,15 +9,17 @@ import { Task } from '../list/task.model';
 })
 export class CreateComponent {
 
-  enteredTitle = "";
-  enteredDescription = "";
   @Output() taskCreate = new EventEmitter<Task>();
 
-  onCreateTask() {
+  onCreateTask(form: NgForm) {
 
+    // form validation
+    if(!form.valid) {
+      return;
+    }
     const task: Task = {
-      title: this.enteredTitle,
-      discription: this.enteredDescription
+      title: form.value.title,
+      discription: form.value.description
     }
     this.taskCreate.emit(task);
 
