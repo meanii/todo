@@ -23,7 +23,7 @@ export class CreateComponent {
     const task: Task = {
       _id: null,
       title: form.value.title,
-      discription: form.value.description
+      description: form.value.description
     }
     this.tasksService.addTask(task)
     form.resetForm(); // to reset the froms
