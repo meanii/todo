@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Task } from '../list/task.model';
+import { TaskService } from '../tasks.service';
 
 @Component({
   selector: 'app-task-create',
@@ -9,7 +10,9 @@ import { Task } from '../list/task.model';
 })
 export class CreateComponent {
 
-  @Output() taskCreate = new EventEmitter<Task>();
+  constructor(public tasksService: TaskService) {
+
+  }
 
   onCreateTask(form: NgForm) {
 
@@ -21,8 +24,8 @@ export class CreateComponent {
       title: form.value.title,
       discription: form.value.description
     }
-    this.taskCreate.emit(task);
-
+    this.tasksService.addTask(task)
+    form.resetForm(); // to reset the froms
   }
 
 }
