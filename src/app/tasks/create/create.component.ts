@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
+import { Task } from '../list/task.model';
 
 @Component({
   selector: 'app-task-create',
@@ -9,11 +10,11 @@ export class CreateComponent {
 
   enteredTitle = "";
   enteredDescription = "";
-  @Output() taskCreate = new EventEmitter();
+  @Output() taskCreate = new EventEmitter<Task>();
 
   onCreateTask() {
 
-    const task = {
+    const task: Task = {
       title: this.enteredTitle,
       discription: this.enteredDescription
     }
