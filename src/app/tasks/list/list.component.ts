@@ -11,16 +11,20 @@ import { Task } from './task.model';
 export class ListComponent implements OnInit, OnDestroy {
 
   storedTasks: Task[] = [];
+  isLoading: boolean = false;
 
   private tasksSub: Subscription;
+
   constructor(public tasksService: TaskService) {
 
   }
 
   ngOnInit() {
     this.tasksService.getTasks();
+    this.isLoading = true;
     this.tasksSub = this.tasksService.getTaskUpdateLister()
       .subscribe((tasks: Task[])=> {
+        this.isLoading = false;
         this.storedTasks = tasks;
       })
     }

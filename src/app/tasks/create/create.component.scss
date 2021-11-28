@@ -5,8 +5,26 @@ mat-card {
 mat-form-field,
 textarea {
   width: 100%;
+  margin-top: 10px;
 }
 
 button {
   margin-top: 25px;
+}
+
+mat-spinner {
+  margin: auto;
+}
+
+.image-preview {
+  height: 5rem;
+  margin: 1rem 0;
+}
+
+.image-preview img {
+  height: 100%;
+}
+
+.file-chooser {
+  display: none;
 }

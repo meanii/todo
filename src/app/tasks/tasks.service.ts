@@ -1,5 +1,6 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { Router } from "@angular/router";
 import { Subject } from "rxjs";
 import { Task } from "./list/task.model";
 
@@ -8,7 +9,7 @@ export class TaskService {
   private tasks: Task[] = [];
   private tasksUpdated = new Subject<Task[]>();
 
-  constructor(private http: HttpClient){
+  constructor(private http: HttpClient, private router: Router){
 
   }
 
@@ -38,6 +39,7 @@ export class TaskService {
         this.tasks[index] = task;
         this.tasksUpdated.next([...this.tasks]);
       }
+      this.router.navigate(['/']);
     })
   }
 
@@ -46,19 +48,26 @@ export class TaskService {
   }
 
   // create new post service instanse
-  addTask(task: Task){
+  addTask(task: Task, image: File){
 
-    this.http.post<{status:{}, data: Task}>('http://localhost:3000/api/tasks', task)
+    const taskData = new FormData();
+    taskData.append("title", task.title);
+    taskData.append("description", task.description);
+    taskData.append("image", image, task.title);
+    console.log(taskData)
+
+    this.http.post<{status:{}, data: Task}>('http://localhost:2000/api/tasks', taskData)
       .subscribe((resp)=>{
         this.tasks.push(resp.data);
         this.tasksUpdated.next([...this.tasks]);
+        this.router.navigate(['/']);
       })
 
   }
 
   // delete service instance
   deleteTask(id: string){
-    this.http.delete('http://localhost:3000/api/tasks/' + id)
+    this.http.delete('http://localhost:2000/api/tasks/' + id)
     .subscribe((resp)=>{
       this.tasks = this.tasks.filter(task => task._id != id);
       this.tasksUpdated.next([...this.tasks]);
