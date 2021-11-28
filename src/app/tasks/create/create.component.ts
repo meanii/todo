@@ -28,13 +28,15 @@ export class CreateComponent implements OnInit{
 
   ngOnInit(){
 
-    this.taskForm = new FormGroup({
-      'title': new FormControl(null, {validators: [Validators.required]}),
-      'description': new FormControl(null, {validators: [Validators.required]}),
-      'image': new FormControl(null, {validators: [Validators.required, imageTypeValidatior]})
-    })
     this.route.paramMap.subscribe((paramMap: ParamMap)=>{
       if(paramMap.has("taskId")){
+
+        this.taskForm = new FormGroup({
+          'title': new FormControl(null, {validators: [Validators.required]}),
+          'description': new FormControl(null, {validators: [Validators.required]}),
+          'image': new FormControl(null, {validators: [Validators.required]})
+        })
+
         this.mode = 'edit';
         this.taskId = paramMap.get('taskId');
         this.isLoading = true;
@@ -44,11 +46,18 @@ export class CreateComponent implements OnInit{
           this.task = resp.data;
           this.taskForm.setValue({
             'title': this.task.title,
-            'description': this.task.description
+            'description': this.task.description,
+            'image': this.task.imagePath
           })
         })
       }
       else {
+        this.taskForm = new FormGroup({
+          'title': new FormControl(null, {validators: [Validators.required]}),
+          'description': new FormControl(null, {validators: [Validators.required]}),
+          'image': new FormControl(null, {validators: [Validators.required, imageTypeValidatior]})
+        })
+
         this.mode = 'create';
         this.taskId = null;
       }
@@ -82,7 +91,7 @@ export class CreateComponent implements OnInit{
       _id: null,
       title: this.taskForm.value.title,
       description: this.taskForm.value.description,
-      imagePath: null
+      imagePath: this.taskForm.value.image
     };
     if(this.mode === 'edit'){
       task._id = this.task._id;

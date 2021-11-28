@@ -28,9 +28,21 @@ export class TaskService {
 
   // edit service instance
   updateTask(task: Task){
-    console.log(task)
+
+    let taskData = null;
+
+    if(typeof(task.imagePath) == 'string'){
+      taskData = task;
+    }
+    else {
+      taskData = new FormData();
+      taskData.append("_id", task._id);
+      taskData.append("title", task.title);
+      taskData.append("description", task.description);
+      taskData.append("image", task.imagePath, task.title);
+    }
     console.log('http://localhost:2000/api/tasks/' + task._id)
-    this.http.put<{status:{}, data: Task}>('http://localhost:2000/api/tasks/' + task._id, task)
+    this.http.put<{status:{}, data: Task}>('http://localhost:2000/api/tasks/' + task._id, taskData)
     .subscribe((resp) => {
       console.log(resp);
 
@@ -54,7 +66,7 @@ export class TaskService {
     taskData.append("title", task.title);
     taskData.append("description", task.description);
     taskData.append("image", image, task.title);
-    console.log(taskData)
+
 
     this.http.post<{status:{}, data: Task}>('http://localhost:2000/api/tasks', taskData)
       .subscribe((resp)=>{
