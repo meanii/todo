@@ -15,6 +15,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderComponent } from './header/header/header.component';
 import { ListComponent } from './tasks/list/list.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatPaginatorModule } from '@angular/material/paginator'
 
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -38,7 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatExpansionModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]
