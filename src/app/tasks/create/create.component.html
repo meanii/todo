@@ -1,12 +1,12 @@
 <mat-card>
-  <form (submit)="onCreateTask(taskFrom)" #taskFrom="ngForm">
+  <form (submit)="onSaveTask(taskFrom)" #taskFrom="ngForm">
     <mat-form-field>
       <mat-label>Todo Title</mat-label>
       <input
       matInput
       type="text"
       name="title"
-      ngModel
+      [ngModel]="task?.title"
       required
       #title="ngModel"
       />
@@ -18,13 +18,13 @@
       <textarea
         matInput
         name="description"
-        ngModel
+        [ngModel]="task?.description"
         required
         placeholder="Ex. It makes me feel..."
         #description="ngModel">
       </textarea>
       <mat-error *ngIf="description.invalid">Please enter description.</mat-error>
     </mat-form-field>
-    <button mat-raised-button color="primary"  type="submit"> Create </button>
+    <button mat-raised-button color="primary"  type="submit"> {{ mode | uppercase}} </button>
   </form>
 </mat-card>

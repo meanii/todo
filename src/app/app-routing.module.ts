@@ -5,7 +5,8 @@ import { ListComponent } from './tasks/list/list.component';
 
 const routes: Routes = [
   {path:'', component: ListComponent},
-  {path:'create', component: CreateComponent}
+  {path:'create', component: CreateComponent},
+  {path:'edit/:taskId', component: CreateComponent}
 ];
 
 @NgModule({
