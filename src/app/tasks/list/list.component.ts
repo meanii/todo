@@ -14,9 +14,10 @@ export class ListComponent implements OnInit, OnDestroy {
   storedTasks: Task[] = [];
   isLoading: boolean = false;
 
-  totalTasks = 100;
+  totalTasks = 0;
   pageSize = 10;
   pageSizeOptions = [1, 5, 10, 100];
+  pageIndex = 0;
 
   private tasksSub: Subscription;
 
@@ -25,23 +26,29 @@ export class ListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.tasksService.getTasks();
+    this.tasksService.getTasks(this.pageSize, this.pageIndex);
     this.isLoading = true;
 
 
     this.tasksSub = this.tasksService.getTaskUpdateLister()
-      .subscribe((tasks: Task[])=> {
+      .subscribe((taskData: any)=> {
         this.isLoading = false;
-        this.storedTasks = tasks;
+
+        this.storedTasks = taskData.tasks;
+        this.totalTasks = taskData.totalCount;
       })
     }
 
     onChangePage(event: PageEvent){
-      console.log(event)
+      this.pageSize = event.pageSize;
+      this.pageIndex = event.pageIndex
+      this.tasksService.getTasks(this.pageSize, event.pageIndex);
     }
 
     onDelete(id: string){
-      this.tasksService.deleteTask(id)
+      this.tasksService.deleteTask(id).subscribe(r=>{
+        this.tasksService.getTasks(this.pageSize, this.pageIndex);
+      })
     }
 
   ngOnDestroy() { // ngOnDestroy for memories leacks

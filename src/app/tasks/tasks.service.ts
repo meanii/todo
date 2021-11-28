@@ -7,17 +7,24 @@ import { Task } from "./list/task.model";
 @Injectable({providedIn: 'root'})
 export class TaskService {
   private tasks: Task[] = [];
-  private tasksUpdated = new Subject<Task[]>();
+  private tasksUpdated = new Subject<{tasks:Task[], totalCount: number}>();
 
   constructor(private http: HttpClient, private router: Router){
 
   }
 
-  getTasks(){
-    this.http.get<{status:{}, data:Task[]}>('http://localhost:2000/api/tasks')
+  getTasks(taskPerPage?: number, currentPage?: number){
+
+    let url = 'http://localhost:2000/api/tasks'
+
+    if(taskPerPage &&  (currentPage > -1)){
+      url += `?pagesize=${taskPerPage}&currentpage=${currentPage}`;
+    }
+
+    this.http.get<{status:{}, data:Task[], totalCount: number}>(url)
       .subscribe((taskData)=> {
           this.tasks = taskData.data;
-          this.tasksUpdated.next([...this.tasks]);
+          this.tasksUpdated.next({tasks:[...this.tasks], totalCount: taskData.totalCount});
       });
   }
 
@@ -41,18 +48,13 @@ export class TaskService {
       taskData.append("description", task.description);
       taskData.append("image", task.imagePath, task.title);
     }
-    console.log('http://localhost:2000/api/tasks/' + task._id)
+
     this.http.put<{status:{}, data: Task}>('http://localhost:2000/api/tasks/' + task._id, taskData)
     .subscribe((resp) => {
-      console.log(resp);
 
-      let index = this.tasks.findIndex(t => t._id == task._id)
-      if(index > -1) {
-        this.tasks[index] = task;
-        this.tasksUpdated.next([...this.tasks]);
-      }
       this.router.navigate(['/']);
-    })
+
+    });
   }
 
   getTaskUpdateLister() {
@@ -70,8 +72,6 @@ export class TaskService {
 
     this.http.post<{status:{}, data: Task}>('http://localhost:2000/api/tasks', taskData)
       .subscribe((resp)=>{
-        this.tasks.push(resp.data);
-        this.tasksUpdated.next([...this.tasks]);
         this.router.navigate(['/']);
       })
 
@@ -79,11 +79,8 @@ export class TaskService {
 
   // delete service instance
   deleteTask(id: string){
-    this.http.delete('http://localhost:2000/api/tasks/' + id)
-    .subscribe((resp)=>{
-      this.tasks = this.tasks.filter(task => task._id != id);
-      this.tasksUpdated.next([...this.tasks]);
-    })
+    return this.http.delete('http://localhost:2000/api/tasks/' + id)
+
   }
 }
 
