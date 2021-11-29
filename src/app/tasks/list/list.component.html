@@ -14,7 +14,7 @@
     <p>
       {{ task.description }}
     </p>
-    <mat-action-row>
+    <mat-action-row *ngIf="userIsAuthenticated">
       <button mat-button color="primary" [routerLink]="['/edit',  task._id]">Edit</button>
       <button mat-button color="warn" (click)="onDelete(task._id)">Delete</button>
     </mat-action-row>

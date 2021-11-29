@@ -20,7 +20,8 @@ export class ListComponent implements OnInit, OnDestroy {
   pageIndex = 0;
 
   private tasksSub: Subscription;
-
+  public userIsAuthenticated: boolean;
+  
   constructor(public tasksService: TaskService) {
 
   }
