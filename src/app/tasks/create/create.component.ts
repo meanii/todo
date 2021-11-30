@@ -91,7 +91,8 @@ export class CreateComponent implements OnInit{
       _id: null,
       title: this.taskForm.value.title,
       description: this.taskForm.value.description,
-      imagePath: this.taskForm.value.image
+      imagePath: this.taskForm.value.image,
+      creator: null
     };
     if(this.mode === 'edit'){
       task._id = this.task._id;

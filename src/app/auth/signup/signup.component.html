@@ -22,14 +22,13 @@
     <!-- password from  -->
     <mat-form-field>
       <mat-label>Password</mat-label>
-      <textarea
+      <input
         matInput
         type="password"
         name="password"
         #passwordInput="ngModel"
         ngModel
         required>
-      </textarea>
       <mat-error *ngIf="passwordInput.invalid">Please enter your password.</mat-error>
     </mat-form-field>
     <button mat-raised-button color="primary"  type="submit"> Sign Up </button>

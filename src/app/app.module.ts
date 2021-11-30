@@ -4,51 +4,39 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CreateComponent } from './tasks/create/create.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
-import { MatInputModule } from '@angular/material/input'
-import { MatCardModule } from '@angular/material/card'
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { HeaderComponent } from './header/header/header.component';
-import { ListComponent } from './tasks/list/list.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatPaginatorModule } from '@angular/material/paginator'
 
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './auth/login/login.component';
-import { SignupComponent } from './auth/signup/signup.component';
 import { AuthInterceptor } from './auth/auth-interceptor.service';
-
+import { ErrorInterceptor } from './error-interceptor';
+import { ErrorComponent } from './error/error.component';
+import { TaskModules } from './tasks/tasks.module';
+import { AngularMaterialModule } from './angular-material.module';
+import { FormsModule, NgModel } from '@angular/forms';
+import { AuthRoutingModule } from './auth/auth-routing.module';
+import { AuthModule } from './auth/auth.module';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    CreateComponent,
     HeaderComponent,
-    ListComponent,
-    LoginComponent,
-    SignupComponent
+    ErrorComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatInputModule,
-    MatCardModule,
-    MatButtonModule,
-    MatToolbarModule,
-    MatExpansionModule,
-    ReactiveFormsModule,
-    FormsModule,
+    AngularMaterialModule,
     HttpClientModule,
-    MatProgressSpinnerModule,
-    MatPaginatorModule
+    TaskModules,
+    FormsModule
   ],
-  providers: [{provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}],
-  bootstrap: [AppComponent]
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}],
+  bootstrap: [AppComponent],
+  entryComponents: [ErrorComponent]
 })
 export class AppModule { }

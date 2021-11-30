@@ -24,6 +24,7 @@ export class TaskService {
     this.http.get<{status:{}, data:Task[], totalCount: number}>(url)
       .subscribe((taskData)=> {
           this.tasks = taskData.data;
+
           this.tasksUpdated.next({tasks:[...this.tasks], totalCount: taskData.totalCount});
       });
   }
