@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class ListComponent implements OnInit, OnDestroy {
 
   storedTasks: Task[] = [];
+  userTasks: any
   isLoading: boolean = false;
 
   totalTasks = 0;
@@ -29,15 +30,21 @@ export class ListComponent implements OnInit, OnDestroy {
   private tasksSub: Subscription;
   public userIsAuthenticated: boolean;
   public creator: string;
+  public loginUser = localStorage.getItem("userId")
 
   constructor(public tasksService: TaskService, private authService: AuthService) {
 
   }
 
   ngOnInit() {
+
+
+    this.userTasks = this.tasksService.getUserTask(localStorage.getItem("userId"))
+    console.log(this.userTasks)
+
+
     this.tasksService.getTasks(this.pageSize, this.pageIndex);
     this.isLoading = true;
-
 
     this.tasksSub = this.tasksService.getTaskUpdateLister()
       .subscribe((taskData: any)=> {
@@ -75,6 +82,7 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnDestroy() { // ngOnDestroy for memories leacks
     this.tasksSub.unsubscribe();
   }
+
 
 }
 

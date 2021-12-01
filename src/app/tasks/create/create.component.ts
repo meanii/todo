@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { imageTypeValidatior } from 'src/app/validators/image-type.validator';
@@ -80,6 +80,7 @@ export class CreateComponent implements OnInit{
     reader.readAsDataURL(file);
   }
 
+
   onSaveTask() {
 
     // form validation
@@ -103,5 +104,6 @@ export class CreateComponent implements OnInit{
     this.taskForm.reset(); // to reset the froms
 
   }
+
 
 }

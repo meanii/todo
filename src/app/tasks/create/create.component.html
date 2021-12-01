@@ -11,6 +11,7 @@
       type="text"
       name="title"
       formControlName='title'
+      maxlength="15"
       />
       <mat-error *ngIf="taskForm.get('title').invalid">Please enter title.</mat-error>
     </mat-form-field>

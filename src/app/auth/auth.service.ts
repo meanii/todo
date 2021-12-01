@@ -67,7 +67,7 @@ export class AuthService {
     .subscribe(resp => {
       console.log(resp)
       this.router.navigate(['/'])
-    }, error=> {
+    }, error => {
       console.log(error)
       this.authStatusListener.next(false);
     })

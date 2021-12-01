@@ -1,6 +1,6 @@
 <mat-spinner *ngIf="isLoading"></mat-spinner>
 
-<mat-accordion>
+<mat-accordion >
   <mat-expansion-panel *ngFor="let task of storedTasks">
     <mat-expansion-panel-header>
       <mat-panel-title>
@@ -22,7 +22,7 @@
 </mat-accordion>
 
 <!-- pagination -->
-<mat-paginator [length]="totalTasks"
+<mat-paginator *ngIf="storedTasks?.length != 0 && !isLoading" [length]="totalTasks"
               [pageSize]="pageSize"
               [pageSizeOptions]="pageSizeOptions"
               (page)="onChangePage($event)"

@@ -1,4 +1,4 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subject } from "rxjs";
@@ -24,7 +24,7 @@ export class TaskService {
     this.http.get<{status:{}, data:Task[], totalCount: number}>(url)
       .subscribe((taskData)=> {
           this.tasks = taskData.data;
-
+          this.tasks = taskData.data.filter(task => task.creator == localStorage.getItem("userId"))
           this.tasksUpdated.next({tasks:[...this.tasks], totalCount: taskData.totalCount});
       });
   }
@@ -32,6 +32,14 @@ export class TaskService {
   getTask(id: string){
     console.log(id)
     return this.http.get<{status:{}, data: Task}>('http://localhost:2000/api/tasks/' + id);
+  }
+
+  getUserTask(userid: string){
+    console.log(userid)
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'userid': userid});
+    return this.http.post<{status:{}, data: Task}>('http://localhost:2000/api/tasks/', null, {headers: headers})
   }
 
   // edit service instance

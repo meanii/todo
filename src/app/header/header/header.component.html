@@ -3,10 +3,11 @@
     <a routerLink="">Todo List App</a>
   </span>
   <span class="spacer"></span>
+
   <ul>
-    <li *ngIf="userIsAuthenticated"><a mat-flat-button color="accent" routerLink="/create" routerLinkActive="mat-warn">Create</a></li>
-    <li *ngIf="!userIsAuthenticated"><a mat-flat-button color="accent" routerLink="/auth/login" routerLinkActive="mat-warn">Login</a></li>
-    <li *ngIf="!userIsAuthenticated"><a mat-flat-button color="accent" routerLink="/auth/signup" routerLinkActive="mat-warn">Signup</a></li>
+    <li *ngIf="userIsAuthenticated"><a mat-button routerLink="/create" routerLinkActive="mat-blue">Create</a></li>
+    <li *ngIf="!userIsAuthenticated"><a mat-button  routerLink="/auth/login" routerLinkActive="mat-blue">Login</a></li>
+    <li *ngIf="!userIsAuthenticated"><a mat-button  routerLink="/auth/signup" routerLinkActive="mat-blue">Signup</a></li>
     <li *ngIf="userIsAuthenticated">
       <button mat-button (click)="onLogOut()">Logout</button>
     </li>
