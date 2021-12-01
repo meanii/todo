@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private authListenerSubs: Subscription;
   public userIsAuthenticated: boolean = false;
-  constructor(private authService: AuthService){
+  constructor(private authService: AuthService, private router: Router){
 
   }
 
@@ -31,9 +32,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.authService.logout();
   }
 
-  setColor(event){
-    console.log(event)
-  }
 
   ngOnDestroy(){
     this.authListenerSubs.unsubscribe();

@@ -39,10 +39,6 @@ export class ListComponent implements OnInit, OnDestroy {
   ngOnInit() {
 
 
-    this.userTasks = this.tasksService.getUserTask(localStorage.getItem("userId"))
-    console.log(this.userTasks)
-
-
     this.tasksService.getTasks(this.pageSize, this.pageIndex);
     this.isLoading = true;
 
@@ -64,6 +60,10 @@ export class ListComponent implements OnInit, OnDestroy {
       this.userIsAuthenticated = isAuthenticated;
       this.userId = this.authService.getUserId();
     })
+
+    if(!this.userIsAuthenticated){
+      this.isLoading = false;
+    }
 
     }
 

@@ -16,21 +16,24 @@ export class TaskService {
   getTasks(taskPerPage?: number, currentPage?: number){
 
     let url = 'http://localhost:2000/api/tasks'
+    const userid = localStorage.getItem("userId")
+
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      'userid': userid});
 
     if(taskPerPage &&  (currentPage > -1)){
       url += `?pagesize=${taskPerPage}&currentpage=${currentPage}`;
     }
 
-    this.http.get<{status:{}, data:Task[], totalCount: number}>(url)
+    this.http.get<{status:{}, data:Task[], totalCount: number}>(url, {headers: headers})
       .subscribe((taskData)=> {
           this.tasks = taskData.data;
-          this.tasks = taskData.data.filter(task => task.creator == localStorage.getItem("userId"))
           this.tasksUpdated.next({tasks:[...this.tasks], totalCount: taskData.totalCount});
       });
   }
 
   getTask(id: string){
-    console.log(id)
     return this.http.get<{status:{}, data: Task}>('http://localhost:2000/api/tasks/' + id);
   }
 

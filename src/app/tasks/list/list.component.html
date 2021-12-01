@@ -11,7 +11,7 @@
     <div class="task-image">
       <img [src]="task.imagePath" [alt]="task.title">
     </div>
-    <p>
+    <p class="dis">
       {{ task.description }}
     </p>
     <mat-action-row *ngIf="userIsAuthenticated && task.creator === userId">
