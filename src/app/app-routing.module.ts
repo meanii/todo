@@ -8,8 +8,7 @@ const routes: Routes = [
   {path:'', component: ListComponent},
   {path:'create', component: CreateComponent, canActivate: [AuthGuard]},
   {path:'edit/:taskId', component: CreateComponent, canActivate: [AuthGuard]},
-  {path: 'auth', loadChildren : () => import('src/app/auth/auth.module').then(m => m.AuthModule)},
-  // {path: '**', redirectTo: 'login'}
+  {path: 'auth', loadChildren : () => import('src/app/auth/auth.module').then(m => m.AuthModule)}
 ];
 
 @NgModule({

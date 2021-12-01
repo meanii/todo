@@ -11,9 +11,8 @@
       type="text"
       name="title"
       formControlName='title'
-      maxlength="15"
       />
-      <mat-error *ngIf="taskForm.get('title').invalid">Please enter title.</mat-error>
+      <mat-error *ngIf="taskForm.get('title').invalid">Please enter title between 5 to 20.</mat-error>
     </mat-form-field>
 
     <!-- image picker -->
@@ -24,6 +23,7 @@
 
     <!-- image preview -->
     <div class="image-preview" *ngIf="imagePreview && imagePreview !== ''">
+      <mat-error *ngIf="taskForm.get('image').invalid">Please just select only valid images, png, jpeg, jpg etc</mat-error>
       <img [src]="imagePreview" [alt]='taskForm.value.title' />
     </div>
 

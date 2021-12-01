@@ -91,6 +91,11 @@ export class AuthService {
     }
   }
 
+  redirectTo(uri:string){
+    this.router.navigateByUrl('/', {skipLocationChange: true}).then(()=>
+    this.router.navigate([uri]));
+ }
+
   // Logout
   logout(){
     this.token = null;
@@ -99,7 +104,7 @@ export class AuthService {
     this.authStatusListener.next(false)
     clearTimeout(this.tokenTimer);
     this.clearAuthData();
-    this.router.navigate(['/'])
+    this.redirectTo('/');
   }
 
   private saveAuthData(token: string, expirationDate: Date, userId: string){

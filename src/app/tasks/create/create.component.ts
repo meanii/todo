@@ -32,7 +32,7 @@ export class CreateComponent implements OnInit{
       if(paramMap.has("taskId")){
 
         this.taskForm = new FormGroup({
-          'title': new FormControl(null, {validators: [Validators.required]}),
+          'title': new FormControl(null, {validators: [Validators.required, Validators.minLength(5), Validators.maxLength(20)]}),
           'description': new FormControl(null, {validators: [Validators.required]}),
           'image': new FormControl(null, {validators: [Validators.required]})
         })
@@ -53,7 +53,7 @@ export class CreateComponent implements OnInit{
       }
       else {
         this.taskForm = new FormGroup({
-          'title': new FormControl(null, {validators: [Validators.required]}),
+          'title': new FormControl(null, {validators: [Validators.required, Validators.minLength(5), Validators.maxLength(20)]}),
           'description': new FormControl(null, {validators: [Validators.required]}),
           'image': new FormControl(null, {validators: [Validators.required, imageTypeValidatior]})
         })
